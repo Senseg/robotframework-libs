@@ -3,6 +3,9 @@
 # vim:ts=2:sw=2:softtabstop=0:tw=74:smarttab:expandtab
 #
 # Copyright The Android Open Source Project
+#
+# Original version 2010 by Keith Dart <keith@kdart.com>
+# Modified by 2012 Pekka Nikander <pekka.nikander@senseg.com>
 
 """Python client for using android adb.
 
@@ -10,6 +13,16 @@ Provides primitive methods for interacting with or controlling an Android
 device over adb (the Android debug interface). This module uses the adb
 server's socket protocol directly, and can be used in place of the adb
 commandline client.
+
+For running the Robot Framework remote server with a given fixture at
+an Android table, the following should work:
+
+>>> adb = AdbClient()
+>>> device = adb.GetDevice(1)
+>>> device.push("%s/%s.py" % (library, fixture), "/data/local/tmp")
+>>> device.push("%s/%s" % (library, "robotremoteserver.py"), "/data/local/tmp")
+>>> device.ShellCommand("TMPDIR=/data/local/tmp PYTHONPATH=/data/local/tmp python -c import robotremoteserver; import %s; robotremoteserver.RobotRemoteServer(%s.%s())" % (fixture, fixture, fixture))
+
 """
 
 import os
