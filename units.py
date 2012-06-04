@@ -1,5 +1,7 @@
 """Helper routine to parse numbers with units."""
 
+import re
+
 def parse_unit(s, expected_unit=None, unit_required=False):
     muls = { None: 1.0, 'k': 1000.0, 'm': 1.0/1000, 'u': 1.0/1000000, 'n': 1.0/1000000000 }
     m = re.match(r'([0-9\.eE+-]+) *(k|m|u|n)?(s|discharger_clocks|cycles|Hz|%|V)?', s)
