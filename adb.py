@@ -19,8 +19,8 @@ an Android table, the following should work:
 
 >>> adb = AdbClient()
 >>> device = adb.GetDevice(1)
->>> device.push("%s/%s.py" % (library, fixture), "/data/local/tmp")
->>> device.push("%s/%s" % (library, "robotremoteserver.py"), "/data/local/tmp")
+>>> device.Push("%s/%s.py" % (library, fixture), "/data/local/tmp")
+>>> device.Push("%s/%s" % (library, "robotremoteserver.py"), "/data/local/tmp")
 >>> device.ShellCommand("TMPDIR=/data/local/tmp PYTHONPATH=/data/local/tmp python -c import robotremoteserver; import %s; robotremoteserver.RobotRemoteServer(%s.%s())" % (fixture, fixture, fixture))
 
 """
