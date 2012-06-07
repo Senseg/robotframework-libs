@@ -91,6 +91,13 @@ class AdbClient(object):
     self.DoCommand(sock, cmd)
     return sock
 
+  def Forward(self, port, remote=None):
+    """Forwards the given port from the host to the device."""
+    if not remote:
+      remote = port
+    sock = self.Connect("host:forward:tcp:%d;tcp:%d" % (port, remote))
+    sock.close()
+
   def HostQuery(self, cmd):
     sock = self._Connect()
     self.DoCommand(sock, cmd)
