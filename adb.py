@@ -31,6 +31,7 @@ import struct
 import stat
 import subprocess
 import socket
+import time
 from cStringIO import StringIO
 
 ADB = "adb"
@@ -203,8 +204,11 @@ class AdbDeviceClient(AdbClient):
 
   def ShellCommand(self, cmd):
     sock = self.Connect("shell:%s" % (cmd,))
-    sock.recv(4096) # eat any output
+    # Closing the socket too early sends SIGHUP to the subprocess.  Give it some time
+    time.sleep(2)
+    data = sock.recv(4096) # eat any output
     sock.close()
+    return data
 
   def ShellCommandOutput(self, cmd):
     io = StringIO()
